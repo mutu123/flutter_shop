@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class TopNavigator extends StatelessWidget {
   final List navigatorList;
 
-  TopNavigator({Key key, this.navigatorList}) :super(key: key);
+  TopNavigator({Key key, this.navigatorList}) : super(key: key);
 
   Widget _gridViewItemUI(BuildContext context, item) {
     return InkWell(
@@ -14,7 +16,10 @@ class TopNavigator extends StatelessWidget {
       },
       child: Column(
         children: <Widget>[
-          Image.network(item['image'], width: ScreenUtil().setWidth(95),),
+          Image.network(
+            item['image'],
+            width: ScreenUtil().setWidth(95),
+          ),
           Text(item['mallCategoryName']),
         ],
       ),
@@ -27,12 +32,14 @@ class TopNavigator extends StatelessWidget {
         height: ScreenUtil().setHeight(320),
         padding: EdgeInsets.all(5.0),
         child: GridView.count(
+           ///禁止滑动
+            physics: NeverScrollableScrollPhysics(),
             crossAxisCount: 5,
 //            physics: NeverScrollableScrollPhysics(),
             padding: EdgeInsets.all(4.0),
             children: navigatorList.map((item) {
               return _gridViewItemUI(context, item);
-            }).toList())
-    );
+            }).toList()));
   }
+
 }

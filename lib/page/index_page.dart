@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'catalogue.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'catalogue_page.dart';
 import 'home_page.dart';
 import 'meber_page.dart';
 import 'shop_cart_page.dart';
@@ -13,11 +14,11 @@ class _IndexPageState extends State<IndexPage> {
   List<BottomNavigationBarItem> bottomTabs = [
     BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
     BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.search), title: Text('catalogue')),
+        icon: Icon(Icons.storage), title: Text('catalogue')),
     BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.shopping_cart), title: Text('cart')),
+        icon: Icon(Icons.shopping_cart), title: Text('cart')),
     BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.music_note), title: Text('member')),
+        icon: Icon(Icons.account_circle), title: Text('member')),
   ];
 
   List<Widget> tabBodies = [
@@ -35,7 +36,7 @@ class _IndexPageState extends State<IndexPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    currentPage = tabBodies [currentIndex];
+    currentPage = tabBodies[currentIndex];
     _pageController = PageController()
       ..addListener(() {
         if (currentPage != _pageController.page.round()) {
@@ -48,10 +49,8 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('百姓生活+'),
-      ),
       backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
       bottomNavigationBar: BottomNavigationBar(
         items: bottomTabs,
@@ -60,7 +59,7 @@ class _IndexPageState extends State<IndexPage> {
         onTap: (int index) {
           setState(() {
             currentIndex = index;
-            currentPage = tabBodies [currentIndex];
+            currentPage = tabBodies[currentIndex];
           });
         },
       ),

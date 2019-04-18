@@ -11,8 +11,6 @@ class SwiperDiy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)
-      ..init(context);
     return Container(
       margin: EdgeInsets.only(top: 10.0),
       height: ScreenUtil().setWidth(333),
