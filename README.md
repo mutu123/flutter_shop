@@ -5,8 +5,8 @@
 ## 项目结构
 项目分为首页、分类、购物车、会员中心，4个模块。
 ## 技术点
-provide动态管理，将布局与数据绑定，个人理解类似于MVVM+dataBanding的效果
-高德地图sdk集成,
+1. provide动态管理，将布局与数据绑定，个人理解类似于MVVM+dataBanding的效果
+2. 图sdk集成,
 
 ## Getting Started
 
