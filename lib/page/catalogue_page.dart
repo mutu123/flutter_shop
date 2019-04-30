@@ -2,7 +2,12 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_shop/model/category_goods.dart';
 import 'package:flutter_shop/model/category_model.dart';
+import 'package:flutter_shop/page/category/goods_category.dart';
+import 'package:flutter_shop/page/category/goods_model.dart';
+import 'package:flutter_shop/page/category/right_categorynav.dart';
+import 'package:flutter_shop/provider/category_goods.dart';
 import 'package:flutter_shop/service/service_method.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_shop/provider/child_category.dart';
@@ -12,7 +17,8 @@ class CataLoguePage extends StatefulWidget {
 }
 
 class _CataLogueState extends State<CataLoguePage> {
-  CategoryBigModel categoryBigModel;
+  List<Data> categoryData;
+  int _onclickIndex = 0; //记忆焦点
 
   @override
   void initState() {
@@ -31,7 +37,10 @@ class _CataLogueState extends State<CataLoguePage> {
         children: <Widget>[
           LeftCategoryNav(),
           Column(
-            children: <Widget>[RightCategoryNav()],
+            children: <Widget>[
+              RightCategoryNav(),
+              GoodsCategoryNav(),
+            ],
           )
         ],
       ),
@@ -44,20 +53,28 @@ class _CataLogueState extends State<CataLoguePage> {
             border: Border(right: BorderSide(color: Colors.black12, width: 1))),
         width: ScreenUtil().setWidth(180),
         child: ListView.builder(
-          itemCount: categoryBigModel?.data?.length ?? 0,
+          itemCount: categoryData?.length ?? 0,
           itemBuilder: (context, index) {
             return InkWell(
               child: Container(
+                color: _onclickIndex == index
+                    ? Colors.black12
+                    : Colors.transparent,
                 height: ScreenUtil().setHeight(100),
                 alignment: Alignment.center,
                 child: Text(
-                  '${categoryBigModel.data[index].mallCategoryName}',
+                  '${categoryData[index].mallCategoryName}',
                   style: TextStyle(fontSize: ScreenUtil().setSp(28)),
                 ),
               ),
               onTap: () {
+                setState(() {
+                  _onclickIndex = index;
+                });
                 Provide.value<ChildCategory>(context).getChildCategory(
-                    categoryBigModel?.data[index].bxMallSubDto);
+                    categoryData[index].bxMallSubDto,
+                    categoryData[index].mallCategoryId);
+                getGoodList(context: context);
               },
             );
           },
@@ -65,47 +82,17 @@ class _CataLogueState extends State<CataLoguePage> {
   }
 
   void iniData() async {
-    await getCataloguePageContent().then((modle) {
+    await ReuqestDao(path: 'getCategory').fetch().then((response) {
+      var modle = CategoryBigModel.fromJson(json.decode(response));
       setState(() {
-        categoryBigModel = modle;
+        categoryData = modle?.data ?? [];
       });
+      //初始化数据
+      Provide.value<ChildCategory>(context).getChildCategory(
+          categoryData[0]?.bxMallSubDto ?? [], categoryData[0]?.mallCategoryId);
+      getGoodList(context: context);
     }).catchError((onError) {
       print('===onError: $onError');
     });
-  }
-}
-
-class RightCategoryNav extends StatefulWidget {
-  @override
-  _RightCategoryNavState createState() => _RightCategoryNavState();
-}
-
-class _RightCategoryNavState extends State<RightCategoryNav> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: ScreenUtil().setHeight(80),
-      width: ScreenUtil().setWidth(570),
-      decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.black12, width: 1))),
-      child: Provide<ChildCategory>(builder: (context, child, scope) {
-        return ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: scope?.bxMallSubDto?.length ?? 0,
-            itemBuilder: (context, index) {
-              return InkWell(
-                child: Container(
-                  width: ScreenUtil().setWidth(120),
-                  alignment: Alignment.center,
-                  child: Text(
-                    '${scope.bxMallSubDto[index].mallSubName}',
-                    style: TextStyle(fontSize: ScreenUtil().setSp(28)),
-                  ),
-                ),
-                onTap: () {},
-              );
-            });
-      }),
-    );
   }
 }
