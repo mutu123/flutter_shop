@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/model/category_goods.dart';
 import 'package:flutter_shop/model/category_model.dart';
 import 'package:flutter_shop/page/category/goods_model.dart';
-import 'package:flutter_shop/provider/child_category.dart';
+import 'package:flutter_shop/provider/child_category_provide.dart';
 import 'package:provide/provide.dart';
 
 class RightCategoryNav extends StatefulWidget {
@@ -22,7 +22,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
       height: ScreenUtil().setHeight(80),
       decoration: BoxDecoration(
           border: Border(bottom: BorderSide(color: Colors.black12, width: 1))),
-      child: Provide<ChildCategory>(builder: (context, child, scope) {
+      child: Provide<ChildCategoryProvide>(builder: (context, child, scope) {
         return ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: scope?.bxMallSubDtoList?.length ?? 0,
@@ -35,7 +35,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
 
   _rightInkWell(int index, BxMallSubDto bxmallsubDto) {
     var clickIndex =
-        index == Provide.value<ChildCategory>(context).mOnClickIndex
+        index == Provide.value<ChildCategoryProvide>(context).mOnClickIndex
             ? true
             : false;
 
@@ -51,9 +51,8 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
         ),
       ),
       onTap: () {
-        Provide.value<ChildCategory>(context).changeIndex(index);
-        getGoodList(context: context, categorySubId: bxmallsubDto?.mallSubId);
-//        _getGoodList(bxmallsubDto?.mallCategoryId);
+        Provide.value<ChildCategoryProvide>(context).changeIndex(index,bxmallsubDto?.mallSubId);
+        getGoodList(context: context);
       },
     );
   }

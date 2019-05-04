@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/router/application.dart';
+import 'package:flutter_shop/router/routes.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SwiperDiy extends StatelessWidget {
-
   final List swiperDataList;
 
-  SwiperDiy({Key key, this.swiperDataList}) :super(key: key);
+  SwiperDiy({Key key, this.swiperDataList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,16 @@ class SwiperDiy extends StatelessWidget {
         itemCount: swiperDataList.length,
         itemBuilder: (context, index) {
           return ClipRRect(
-            child: Image.network(
-              swiperDataList[index]['image'], fit: BoxFit.fill,),
+            child: InkWell(
+              onTap: () {
+                Application.router.navigateTo(context,
+                    '${Routes.detailsPage}?id=${swiperDataList[index]['goodsId']}');
+              },
+              child: Image.network(
+                swiperDataList[index]['image'],
+                fit: BoxFit.fill,
+              ),
+            ),
             borderRadius: BorderRadius.circular(5.0),
           );
         },
@@ -32,7 +41,3 @@ class SwiperDiy extends StatelessWidget {
     );
   }
 }
-
-
-
-

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_shop/router/application.dart';
+import 'package:flutter_shop/router/routes.dart';
 
 class Recommend extends StatelessWidget {
 
@@ -15,7 +17,7 @@ class Recommend extends StatelessWidget {
       child: Column(
         children: <Widget>[
           _titleWidget(),
-          _recommendlist(),
+          _recommendWidget(),
         ],
       ),
     );
@@ -34,25 +36,27 @@ class Recommend extends StatelessWidget {
     );
   }
 
-  Widget _recommendlist() {
+  Widget _recommendWidget() {
     return Container(
       height: ScreenUtil().setHeight(330),
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: recommendList.length,
           itemBuilder: (context, index) {
-            return _item(index);
+            return _item(context,index);
           }),
     );
   }
 
-  Widget _item(int index) {
+  Widget _item(BuildContext context,int index) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Application.router.navigateTo(context, '${Routes.detailsPage}?id=${recommendList[index]['goodsId']}');
+      },
       child: Container(
         width: ScreenUtil().setWidth(250),
-        height: ScreenUtil().setHeight(330),
-        padding: EdgeInsets.all(8.0),
+//        height: ScreenUtil().setHeight(330),
+//        padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
             border: Border(
                 left: BorderSide(width: 1, color: Colors.black12)

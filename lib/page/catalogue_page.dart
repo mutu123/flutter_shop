@@ -7,10 +7,10 @@ import 'package:flutter_shop/model/category_model.dart';
 import 'package:flutter_shop/page/category/goods_category.dart';
 import 'package:flutter_shop/page/category/goods_model.dart';
 import 'package:flutter_shop/page/category/right_categorynav.dart';
-import 'package:flutter_shop/provider/category_goods.dart';
+import 'package:flutter_shop/provider/category_goods_provide.dart';
 import 'package:flutter_shop/service/service_method.dart';
 import 'package:provide/provide.dart';
-import 'package:flutter_shop/provider/child_category.dart';
+import 'package:flutter_shop/provider/child_category_provide.dart';
 
 class CataLoguePage extends StatefulWidget {
   _CataLogueState createState() => _CataLogueState();
@@ -71,7 +71,7 @@ class _CataLogueState extends State<CataLoguePage> {
                 setState(() {
                   _onclickIndex = index;
                 });
-                Provide.value<ChildCategory>(context).getChildCategory(
+                Provide.value<ChildCategoryProvide>(context).getChildCategory(
                     categoryData[index].bxMallSubDto,
                     categoryData[index].mallCategoryId);
                 getGoodList(context: context);
@@ -88,7 +88,7 @@ class _CataLogueState extends State<CataLoguePage> {
         categoryData = modle?.data ?? [];
       });
       //初始化数据
-      Provide.value<ChildCategory>(context).getChildCategory(
+      Provide.value<ChildCategoryProvide>(context).getChildCategory(
           categoryData[0]?.bxMallSubDto ?? [], categoryData[0]?.mallCategoryId);
       getGoodList(context: context);
     }).catchError((onError) {

@@ -1,7 +1,11 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_shop/provider/child_category.dart';
-import 'package:flutter_shop/provider/category_goods.dart';
+import 'package:flutter_shop/provider/child_category_provide.dart';
+import 'package:flutter_shop/provider/category_goods_provide.dart';
+import 'package:flutter_shop/provider/details_info.dart';
+import 'package:flutter_shop/router/application.dart';
+import 'package:flutter_shop/router/routes.dart';
 import 'page/index_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'provider/count_dart.dart';
@@ -9,25 +13,38 @@ import 'package:provide/provide.dart';
 
 void main() {
   var counter = Counter();
-  var childCategory = ChildCategory();
-  var goodsCategory = GoodsCategory();
+  var childCategory = ChildCategoryProvide();
+  var goodsCategory = GoodsCategoryProvide();
+  var detailInfo = DetailsInfoProvide();
   var providers = Providers();
   providers
     ..provide(Provider<Counter>.value(counter))
-    ..provide(Provider<ChildCategory>.value(childCategory))
-    ..provide(Provider<GoodsCategory>.value(goodsCategory));
+    ..provide(Provider<ChildCategoryProvide>.value(childCategory))
+    ..provide(Provider<GoodsCategoryProvide>.value(goodsCategory))
+    ..provide(Provider<DetailsInfoProvide>.value(detailInfo));
   runApp(ProviderNode(child: MyApp(), providers: providers));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    ///fluro start
+    final router = Router();
+    Routes.configureRoutes(router);
+    Application.router = router;
+
+    ///fluro end
+
     return Container(
       child: MaterialApp(
         theme: ThemeData(primaryColor: Colors.pink),
         debugShowCheckedModeBanner: false,
+
+        ///fluro start
+        onGenerateRoute: Application.router.generator,
+
+        ///fluro end
         home: IndexPage(),
-//        home: Test(),
       ),
     );
   }
