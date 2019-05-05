@@ -7,10 +7,10 @@ class DetailsTopArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provide<DetailsInfoProvide>(builder: (context, child, scope) {
-      var goodsInfo =Provide.value<DetailsInfoProvide>(context).goodsInfo.data.goodInfo;
-      if (goodsInfo != null) {
-//      var goodsInfo = scope?.goodsInfo?.data?.goodInfo;
+//      var goodsInfo =Provide.value<DetailsInfoProvide>(context).goodsInfo.data.goodInfo;
 //      if (goodsInfo != null) {
+      var goodsInfo = scope?.goodsInfo?.data?.goodInfo;
+      if (goodsInfo != null) {
         return Container(
           child: Column(
             children: <Widget>[
@@ -29,7 +29,11 @@ class DetailsTopArea extends StatelessWidget {
 
   //商品图片
   Widget _goodsImage(url) {
-    return Image.network(url, width: ScreenUtil().setWidth(740));
+    return Image.network(
+      url,
+      height: ScreenUtil().setHeight(500),
+      fit: BoxFit.cover,
+    );
   }
 
   //商品名称
@@ -53,13 +57,12 @@ class DetailsTopArea extends StatelessWidget {
       margin: EdgeInsets.only(top: 8.0),
       child: Text(
         '编号：$num}',
-        style: TextStyle(color: Colors.black12),
+        style: TextStyle(color: Colors.black45),
       ),
     );
   }
 
   //商品价格方法
-
   Widget _goodsPrice(presentPrice, oriPrice) {
     return Container(
       width: ScreenUtil().setWidth(730),

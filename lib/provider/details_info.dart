@@ -8,9 +8,15 @@ import 'package:flutter_shop/service/service_method.dart';
 class DetailsInfoProvide with ChangeNotifier {
   DetailsModel goodsInfo;
 
+  //详情
+  bool isLeft = true;
+
+  //评论
+  bool isRight = false;
+
   getGoodsDetail(String id) {
     var formData = {'goodId': id};
-
+    goodsInfo = null;
     ReuqestDao(path: Constant.getGoodDetailById, formData: formData)
         .fetch()
         .then((response) {
@@ -21,5 +27,17 @@ class DetailsInfoProvide with ChangeNotifier {
     }).catchError((onError) {
       print('details get data onError $onError');
     });
+  }
+
+  //改变tabBar的状态
+  changeLeftAndRight(String changeState) {
+    if (changeState == 'left') {
+      isLeft = true;
+      isRight = false;
+    } else {
+      isLeft = false;
+      isRight = true;
+    }
+    notifyListeners();
   }
 }

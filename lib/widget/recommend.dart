@@ -12,7 +12,7 @@ class Recommend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(400),
+      height: ScreenUtil().setHeight(410),
       padding: EdgeInsets.only(top: 10.0),
       child: Column(
         children: <Widget>[
@@ -26,7 +26,7 @@ class Recommend extends StatelessWidget {
   Widget _titleWidget() {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.fromLTRB(10.0, 2.0, 0, 5.0),
+//      padding: EdgeInsets.fromLTRB(10.0, 2.0, 0, 5.0),
       decoration: BoxDecoration(
           border: Border(
               bottom: BorderSide(width: 1, color: Colors.black12)
@@ -38,7 +38,7 @@ class Recommend extends StatelessWidget {
 
   Widget _recommendWidget() {
     return Container(
-      height: ScreenUtil().setHeight(330),
+      height: ScreenUtil().setHeight(340),
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: recommendList.length,

@@ -33,6 +33,10 @@ dependencies:
   provide: ^1.0.2
   #fluro路由管理机制
   fluro: ^1.4.0
+  #html加载
+  flutter_html: ^0.9.6
+  #shared_preferences
+  shared_preferences: ^0.5.1
 
 dev_dependencies:
   flutter_test:
