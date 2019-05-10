@@ -1,39 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provide/provide.dart';
-import 'package:flutter_shop/provider/count_dart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ShopCartPage extends StatelessWidget {
+class ShopCartPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[one(), second()],
-      ),
-    );
-  }
+  _ShopCartPageState createState() => _ShopCartPageState();
 }
 
-class one extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Provide<Counter>(builder: (context, child, counter) {
-        return Text('${counter.count}');
-      }),
-    );
-  }
-}
+class _ShopCartPageState extends State<ShopCartPage> {
+  List<String> testList = [];
 
-class second extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: RaisedButton(
-        onPressed: () {
-          Provide.value<Counter>(context).increment();
-        },
-        child: Text('递增'),
+    return Scaffold(
+      body: Container(
+        margin: EdgeInsets.only(top: 30),
+        child: Text(''),
       ),
     );
   }
