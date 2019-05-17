@@ -23,9 +23,5 @@ class CartProvide with ChangeNotifier {
         break;
       }
     }
-
-    if () {
-
-    }
   }
 }

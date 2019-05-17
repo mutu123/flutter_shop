@@ -10,18 +10,21 @@ import 'page/index_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'provider/count_dart.dart';
 import 'package:provide/provide.dart';
+import 'package:flutter_shop/provider/theme_provider.dart';
 
 void main() {
   var counter = Counter();
   var childCategory = ChildCategoryProvide();
   var goodsCategory = GoodsCategoryProvide();
   var detailInfo = DetailsInfoProvide();
+  var theme = ThemeProvide();
   var providers = Providers();
   providers
     ..provide(Provider<Counter>.value(counter))
     ..provide(Provider<ChildCategoryProvide>.value(childCategory))
     ..provide(Provider<GoodsCategoryProvide>.value(goodsCategory))
-    ..provide(Provider<DetailsInfoProvide>.value(detailInfo));
+    ..provide(Provider<DetailsInfoProvide>.value(detailInfo))
+    ..provide(Provider<ThemeProvide>.value(theme));
   runApp(ProviderNode(child: MyApp(), providers: providers));
 }
 
@@ -36,8 +39,9 @@ class MyApp extends StatelessWidget {
     ///fluro end
 
     return Container(
-      child: MaterialApp(
-        theme: ThemeData(primaryColor: Colors.pink),
+        child: Provide<ThemeProvide>(builder: (context, child, scope) {
+      return MaterialApp(
+        theme: scope.themeData,
         debugShowCheckedModeBanner: false,
 
         ///fluro start
@@ -45,8 +49,8 @@ class MyApp extends StatelessWidget {
 
         ///fluro end
         home: IndexPage(),
-      ),
-    );
+      );
+    }));
   }
 }
 
