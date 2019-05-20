@@ -5,6 +5,7 @@ import 'package:flutter_shop/router/router_handler.dart';
 class Routes {
   static String root = '/';
   static String detailsPage = '/detail';
+  static String homePage = '/home';
 
   static void configureRoutes(Router router) {
     router.notFoundHandler = Handler(
@@ -13,5 +14,6 @@ class Routes {
     });
 
     router.define(detailsPage, handler: detailsHander);
+    router.define(homePage, handler: homeHander);
   }
 }

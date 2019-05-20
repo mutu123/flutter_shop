@@ -121,4 +121,30 @@ class StringZh extends StringBase {
   register() {
     return "注册";
   }
+
+  @override
+  home() {
+    return "主页";
+  }
+
+  @override
+  catalogue() {
+    return "分类";
+  }
+
+  @override
+  cart() {
+    return "购物车";
+  }
+
+  @override
+  member() {
+    return "个人中心";
+  }
+
+  @override
+  next() {
+    // TODO: implement next
+    return '进入';
+  }
 }

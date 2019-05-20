@@ -1,16 +1,21 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_shop/page/splashPage/splash_page.dart';
 import 'package:flutter_shop/provider/child_category_provide.dart';
 import 'package:flutter_shop/provider/category_goods_provide.dart';
 import 'package:flutter_shop/provider/details_info.dart';
 import 'package:flutter_shop/router/application.dart';
 import 'package:flutter_shop/router/routes.dart';
+import 'config/constant.dart';
 import 'page/index_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'provider/count_dart.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_shop/provider/theme_provider.dart';
+import 'style/global_localizations_delegate.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   var counter = Counter();
@@ -36,22 +41,61 @@ class MyApp extends StatelessWidget {
     Routes.configureRoutes(router);
     Application.router = router;
 
+    checkFirst(context);
     ///fluro end
-
     return Container(
         child: Provide<ThemeProvide>(builder: (context, child, scope) {
       return MaterialApp(
         theme: scope.themeData,
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalLocalizationsDelegate.delegate,
+        ],
+
+        locale: scope.locale,
+        supportedLocales: [
+          const Locale('en', 'US'), //English
+          const Locale('zh', 'CH'), //Hebrew
+        ],
 
         ///fluro start
         onGenerateRoute: Application.router.generator,
 
         ///fluro end
         home: IndexPage(),
+//        routes: {
+//          SplashPage.name: (context) {
+//            return SplashPage();
+//          },
+//          IndexPage.name: (context) {
+//            return IndexPage();
+//          },
+//        },
       );
     }));
   }
+
+   checkFirst(BuildContext context)  {
+    SharedPreferences.getInstance().then((value){
+      var firstBool =value.getBool(Constant.first_open);
+      print('==========firstBool: $firstBool');
+      if (firstBool??true) {
+        //第一次进入app
+        set();
+        return SplashPage();
+      } else {
+        return IndexPage();
+      }
+    });
+  }
+
+  set() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setBool(Constant.first_open, false);
+  }
+
 }
 
 class Test extends StatelessWidget {

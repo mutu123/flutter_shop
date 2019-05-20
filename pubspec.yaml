@@ -37,6 +37,9 @@ dependencies:
   flutter_html: ^0.9.6
   #shared_preferences
   shared_preferences: ^0.5.1
+  # 语言
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +64,9 @@ flutter:
   assets:
   - assets/images/air-hostess.png
   - assets/images/airplane.png
+  - assets/images/bg_guide_view_1.png
+  - assets/images/bg_guide_view_2.png
+  - assets/images/bg_guide_view_3.png
 
 
 

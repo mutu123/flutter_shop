@@ -46,4 +46,14 @@ abstract class StringBase {
   login();
 
   register();
+
+  home();
+
+  catalogue();
+
+  cart();
+
+  member();
+
+  next();
 }

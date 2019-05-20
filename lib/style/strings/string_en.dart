@@ -120,4 +120,30 @@ class StringEn extends StringBase {
   register() {
     return "Register";
   }
+
+  @override
+  home() {
+    return "Home";
+  }
+
+  @override
+  catalogue() {
+    return "catalogue";
+  }
+
+  @override
+  cart() {
+    return "cart";
+  }
+
+  @override
+  member() {
+    return "member";
+  }
+
+  @override
+  next() {
+    // TODO: implement next
+    return 'next';
+  }
 }
